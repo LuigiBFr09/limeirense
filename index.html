@@ -362,6 +362,339 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(47,107,255,0.2);pad
   .ticker-inner,.marquee-track{animation:none;}
   .hero-crest{animation:none;}
 }
+
+/* ═══════════════════════════════════════════
+   NOVO MÓDULO — ESCALAÇÃO TÁTICA PROFISSIONAL
+═══════════════════════════════════════════ */
+.tactic-container {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 24px;
+  background: rgba(8, 26, 68, 0.4);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px;
+  margin-top: 20px;
+  position: relative;
+}
+
+/* Painel de Controles Lateral */
+.tactic-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 10;
+}
+.tactic-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.tactic-label {
+  font-family: var(--font-head);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--blue-lite);
+}
+.tactic-select, .tactic-input {
+  background: var(--ink2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--white);
+  padding: 10px 14px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.tactic-select:focus, .tactic-input:focus {
+  border-color: var(--accent);
+}
+.tactic-btn-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.tactic-btn {
+  background: var(--blue-deep);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--white);
+  padding: 10px;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.tactic-btn:hover {
+  background: var(--blue);
+  border-color: var(--blue-lite);
+}
+.tactic-btn:active {
+  transform: scale(0.98);
+}
+.tactic-btn.danger {
+  background: rgba(248, 113, 113, 0.15);
+  border-color: rgba(248, 113, 113, 0.4);
+  color: var(--loss);
+}
+.tactic-btn.danger:hover {
+  background: var(--loss);
+  color: var(--ink);
+}
+.tactic-btn.accent {
+  background: var(--accent);
+  color: var(--ink);
+  border-color: var(--white);
+}
+.tactic-btn.accent:hover {
+  background: var(--blue-lite);
+}
+
+/* Lista de Jogadores na Sidebar */
+.tactic-player-list {
+  background: rgba(4, 16, 46, 0.6);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  max-height: 380px;
+  overflow-y: auto;
+  padding: 8px;
+}
+.list-player-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.2s;
+  user-select: none;
+}
+.list-player-item:hover {
+  background: rgba(79, 140, 255, 0.1);
+}
+.list-player-item.active-on-field {
+  background: rgba(22, 64, 200, 0.25);
+  border-left: 3px solid var(--accent);
+}
+.list-jersey-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+.list-player-info {
+  flex: 1;
+}
+.list-player-name {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+.list-player-meta {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+.list-player-status {
+  display: flex;
+  gap: 4px;
+}
+
+/* Campo de Futebol */
+.tactic-pitch-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.pitch-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 74 / 105; /* Proporção oficial de campo de futebol */
+  background: #1e5e2f;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(4, 10, 30, 0.8);
+  border: 4px solid #ffffff;
+}
+.pitch-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Camisas dos Jogadores no Campo (Cards Esportivos) */
+.pitch-player-card {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 75px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: grab;
+  z-index: 5;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s;
+  user-select: none;
+  touch-action: none;
+}
+.pitch-player-card:active {
+  cursor: grabbing;
+  z-index: 100;
+}
+.pitch-player-card.dragging {
+  transform: translate(-50%, -50%) scale(1.15);
+  opacity: 0.9;
+  filter: drop-shadow(0 15px 20px rgba(0,0,0,0.6));
+}
+.jersey-svg-container {
+  width: 52px;
+  height: 52px;
+  position: relative;
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,0.4));
+  transition: transform 0.2s;
+}
+.pitch-player-card:hover .jersey-svg-container {
+  transform: translateY(-4px) scale(1.05);
+}
+.jersey-number-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--white);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  padding-top: 4px;
+}
+.jersey-gk .jersey-number-overlay {
+  color: #04102e;
+  text-shadow: 0 1px 2px rgba(255,255,255,0.4);
+}
+.player-card-name {
+  margin-top: 6px;
+  background: rgba(4, 16, 46, 0.85);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(4px);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 0.68rem;
+  white-space: nowrap;
+  max-width: 95px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--white);
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+/* Ícones de Status e Adereços */
+.captain-armband {
+  position: absolute;
+  width: 14px;
+  height: 6px;
+  background: #ffd700;
+  border: 1px solid #b8860b;
+  box-shadow: 0 0 4px #ffd700;
+  top: 24px;
+  left: 8px;
+  transform: rotate(-15deg);
+  border-radius: 1px;
+}
+.status-badge-field {
+  position: absolute;
+  top: 0;
+  right: 4px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  border: 1px solid var(--white);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+.status-badge-field.injured { background: var(--loss); }
+.status-badge-field.loan { background: var(--draw); }
+
+/* Área do Banco de Reservas */
+.bench-container {
+  background: rgba(4, 16, 46, 0.6);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  min-height: 90px;
+}
+.bench-title {
+  font-family: var(--font-head);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+.bench-slots {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  min-height: 60px;
+  align-items: center;
+}
+.bench-slots .pitch-player-card {
+  position: relative;
+  transform: none !important;
+  left: auto !important;
+  top: auto !important;
+}
+
+/* Sidebar Toggle Mobile */
+.sidebar-toggle-mobile {
+  display: none;
+}
+
+@media(max-width: 920px) {
+  .tactic-container {
+    grid-template-columns: 1fr;
+  }
+  .tactic-sidebar {
+    display: none;
+  }
+  .tactic-sidebar.open-mobile {
+    display: flex;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(4, 16, 46, 0.98);
+    backdrop-filter: blur(20px);
+    z-index: 250;
+    padding: 24px;
+    overflow-y: auto;
+  }
+  .sidebar-toggle-mobile {
+    display: flex;
+    width: 100%;
+  }
+}
 </style>
 </head>
 <body id="top">
@@ -369,7 +702,6 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(47,107,255,0.2);pad
 <div class="scroll-progress" id="scroll-progress"></div>
 <canvas id="bg-canvas"></canvas>
 
-<!-- NAV -->
 <nav id="nav">
   <a href="#top" class="nav-logo">
     <img src="crest.png" alt="Atlético Limeirense" onerror="this.style.display='none'">
@@ -383,16 +715,15 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(47,107,255,0.2);pad
     <li><a href="#jogos">Jogos</a></li>
     <li><a href="#historico">Histórico</a></li>
     <li><a href="#stats">Números</a></li>
+    <li><a href="#escalacao">Escalação</a></li>
   </ul>
 </nav>
 
-<!-- NEWS BAR -->
 <div class="news-bar">
   <div class="news-tag">◆ Notícias</div>
   <div class="ticker-wrap"><div class="ticker-inner" id="ticker"></div></div>
 </div>
 
-<!-- HERO -->
 <header class="hero">
   <p class="hero-eyebrow">Atlético Limeirense · Clube de Futebol · Limeira-SP</p>
   <img class="hero-crest" src="crest.png" alt="Escudo do Atlético Limeirense" onerror="this.style.display='none'">
@@ -406,12 +737,10 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(47,107,255,0.2);pad
   <div class="scroll-cue"><div class="mouse"></div><span>Role para explorar</span></div>
 </header>
 
-<!-- MARQUEE 1 -->
 <div class="marquee" aria-hidden="true">
   <div class="marquee-track" id="marq1"></div>
 </div>
 
-<!-- ELENCO -->
 <section class="section" id="elenco">
   <div class="reveal">
     <div class="section-label">Temporada 2026</div>
@@ -422,7 +751,6 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(47,107,255,0.2);pad
 
 <div class="divider"></div>
 
-<!-- UNIFORMES -->
 <section class="section" id="uniformes">
   <div class="reveal">
     <div class="section-label">Temporada 2026</div>
@@ -430,12 +758,15 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(47,107,255,0.2);pad
   </div>
   <div class="kits-grid">
 
-    <!-- CAMISA I -->
     <div class="kit-card reveal-left">
       <div class="kit-badge">Camisa I · Principal</div>
-      <div class="kit-svg-wrap" id="kit-home"></div>
+      <div class="kit-svg-wrap">
+  <img
+    src="branca.png"
+    alt="Placeholder da Camisa I"
+    style="width:100%;height:auto;border-radius:12px;">
+</div>
       <div class="kit-name">Camisa I</div>
-      <div class="kit-desc">O manto da nova era. Azul royal profundo com gola e detalhes em branco — a cor do escudo vestida com orgulho.</div>
       <div class="kit-colors">
         <div class="kit-color-dot" style="background:#0a2a8c" title="Azul Royal"></div>
         <div class="kit-color-dot" style="background:#ffffff" title="Branco"></div>
@@ -443,12 +774,15 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(47,107,255,0.2);pad
       </div>
     </div>
 
-    <!-- CAMISA II -->
     <div class="kit-card reveal-right">
       <div class="kit-badge">Camisa II · Alternativa</div>
-      <div class="kit-svg-wrap" id="kit-away"></div>
+      <div class="kit-svg-wrap">
+  <img
+    src="preta.png"
+    alt="Placeholder da Camisa II"
+    style="width:100%;height:auto;border-radius:12px;">
+</div>
       <div class="kit-name">Camisa II</div>
-      <div class="kit-desc">Uniforme alternativo. Branco puro com acabamentos em azul royal — leveza e tradição para os jogos fora de casa.</div>
       <div class="kit-colors">
         <div class="kit-color-dot" style="background:#ffffff" title="Branco"></div>
         <div class="kit-color-dot" style="background:#0a2a8c" title="Azul Royal"></div>
@@ -459,12 +793,10 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(47,107,255,0.2);pad
   </div>
 </section>
 
-<!-- MARQUEE 2 -->
 <div class="marquee rev" aria-hidden="true">
   <div class="marquee-track" id="marq2"></div>
 </div>
 
-<!-- JOGOS -->
 <section class="section" id="jogos">
   <div class="reveal">
     <div class="section-label">Partidas</div>
@@ -475,7 +807,116 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(47,107,255,0.2);pad
 
 <div class="divider"></div>
 
-<!-- HISTÓRICO -->
+<section class="section" id="escalacao">
+  <div class="reveal">
+    <div class="section-label">Estratégia & Tática</div>
+    <div class="section-title">Prancheta Tática</div>
+  </div>
+
+  <button class="tactic-btn accent sidebar-toggle-mobile" id="tactic-toggle-sidebar-btn" style="margin-bottom: 16px;">
+    📋 Abrir Lista & Configurações
+  </button>
+
+  <div class="tactic-container">
+    
+    <aside class="tactic-sidebar" id="tactic-sidebar">
+      <button class="tactic-btn danger sidebar-toggle-mobile" id="tactic-close-sidebar-btn">
+        Fechar Configurações
+      </button>
+
+      <div class="tactic-group">
+        <label class="tactic-label">Modalidade de Jogo</label>
+        <select class="tactic-select" id="tactic-mode-select">
+          <option value="11">Futebol de Campo (11 vs 11)</option>
+          <option value="10">Futebol de Campo (10 vs 10)</option>
+          <option value="9">Mini-campo (9 vs 9)</option>
+          <option value="8">Mini-campo (8 vs 8)</option>
+          <option value="7" selected>Society (7 vs 7)</option>
+          <option value="6">Society (6 vs 6)</option>
+          <option value="5">Futsal / Society (5 vs 5)</option>
+        </select>
+      </div>
+
+      <div class="tactic-group">
+        <label class="tactic-label">Esquema Tático</label>
+        <select class="tactic-select" id="tactic-formation-select">
+          </select>
+      </div>
+
+      <div class="tactic-group">
+        <label class="tactic-label">Formações Customizadas</label>
+        <div style="display:flex; gap:8px;">
+          <input type="text" class="tactic-input" id="custom-formation-name" placeholder="Nome do esquema" style="flex:1;">
+          <button class="tactic-btn accent" id="save-custom-formation-btn" title="Salvar posições atuais">Salvar</button>
+        </div>
+        <select class="tactic-select" id="custom-formations-list" style="margin-top:6px; display:none;">
+          <option value="">-- Usar salva --</option>
+        </select>
+      </div>
+
+      <div class="tactic-group" style="flex:1;">
+        <label class="tactic-label">Disponíveis no Elenco</label>
+        <div class="tactic-player-list" id="tactic-player-list">
+          </div>
+      </div>
+
+      <div class="tactic-btn-grid">
+        <button class="tactic-btn danger" id="tactic-reset-btn">Limpar</button>
+        <button class="tactic-btn accent" id="tactic-export-btn">Exportar PNG</button>
+      </div>
+    </aside>
+
+    <div class="tactic-pitch-wrapper">
+      <div class="pitch-container" id="pitch-capture-area">
+        <svg class="pitch-svg" viewBox="0 0 740 1050" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="lawn-stripes" width="740" height="100" patternUnits="userSpaceOnUse">
+              <rect width="740" height="50" fill="#246e37" />
+              <rect y="50" width="740" height="50" fill="#1e5e2f" />
+            </pattern>
+          </defs>
+          
+          <rect width="740" height="1050" fill="url(#lawn-stripes)" />
+          
+          <g fill="none" stroke="#ffffff" stroke-width="4" opacity="0.85">
+            <rect x="25" y="25" width="690" height="1000" />
+            
+            <line x1="25" y1="525" x2="715" y2="525" />
+            
+            <circle cx="370" cy="525" r="91.5" />
+            <circle cx="370" cy="525" r="3" fill="#ffffff" />
+            
+            <rect x="295" y="25" width="150" height="55" />
+            
+            <rect x="170" y="25" width="400" height="165" />
+            
+            <path d="M 278.5 190 A 91.5 91.5 0 0 0 461.5 190" />
+            <circle cx="370" cy="135" r="3" fill="#ffffff" /> <rect x="295" y="970" width="150" height="55" />
+            
+            <rect x="170" y="860" width="400" height="165" />
+            
+            <path d="M 461.5 860 A 91.5 91.5 0 0 0 278.5 860" />
+            <circle cx="370" cy="915" r="3" fill="#ffffff" /> <path d="M 25 35 A 10 10 0 0 0 35 25" />
+            <path d="M 705 25 A 10 10 0 0 0 715 35" />
+            <path d="M 35 1025 A 10 10 0 0 0 25 1015" />
+            <path d="M 715 1015 A 10 10 0 0 0 705 1025" />
+          </g>
+        </svg>
+
+        <div id="field-players-space" style="position:absolute; inset:0; pointer-events:none;"></div>
+      </div>
+
+      <div class="bench-container">
+        <div class="bench-title">Banco de Reservas</div>
+        <div class="bench-slots" id="bench-players-space"></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
 <section class="section" id="historico">
   <div class="reveal">
     <div class="section-label">A trajetória</div>
@@ -486,7 +927,6 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(47,107,255,0.2);pad
 
 <div class="divider"></div>
 
-<!-- STATS -->
 <section class="section" id="stats">
   <div class="reveal">
     <div class="section-label">Números</div>
@@ -496,7 +936,6 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(47,107,255,0.2);pad
   <div id="bars"></div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <img class="footer-crest" src="crest.png" alt="" onerror="this.style.display='none'">
   <div class="footer-name">Atlético Limeirense</div>
@@ -521,9 +960,9 @@ const NEWS_ITEMS = [
 /* pos: GK | DEF | MID | ATT   badges: captain | injured | loan */
 const PLAYERS = [
   { number:1,  name:"Gabriel",       pos:"GK",  note:"Assinado para 2026", badges:[] },
-  { number:6,  name:"Raphael",       pos:"GK",  note:"Desde o início",      badges:["injured"] },
+  { number:6,  name:"Raphael",       pos:"GK",  note:"Desde o início",      badges:[] },
   { number:7,  name:"Thigas",        pos:"GK",  note:"Ex-Cotil",            badges:[] },
-  { number:4,  name:"Isaac",         pos:"DEF", note:"Desde o início",      badges:["injured"] },
+  { number:4,  name:"Isaac",         pos:"DEF", note:"Desde o início",      badges:[] },
   { number:12, name:"Luigi",         pos:"DEF", note:"Desde o início",      badges:["captain"] },
   { number:5,  name:"Gabeg",         pos:"DEF", note:"Ex-Mirassol",         badges:[] },
   { number:2,  name:"Yuri",          pos:"DEF", note:"Ex-Mirassol",         badges:[] },
@@ -546,6 +985,9 @@ const MATCHES = [
   { opponent:"Caze",    date:"2024",       result:"W",  score:"12x1",  home:true,  note:"Grande vitória" },
   { opponent:"Pandora", date:"Mid-2025",   result:"L",  score:"2x8",   home:false, note:"" },
   { opponent:"Pandora", date:"Maio 2026",  result:"D",  score:"11x11", home:true,  note:"Jogo lendário" },
+  { opponent:"Pandora", date:"Junho 2026",   result:"L",  score:"15x5",   home:false, note:"" },
+  { opponent:"Pandora", date:"Junho 2026",  result:"W",  score:"8x4", home:true,  note:"Último jogo como Aliginianos" },
+  { opponent:"Pandora", date:"Junho 2026",  result:null,  score:null, home:true,  note:"O início do Atlético Limeirense" },
 ];
 const HISTORY_NAME = "Aliginianos"; // nome usado nos registros históricos de jogos
 
@@ -580,30 +1022,6 @@ const HISTORY = [
 ];
 
 const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-/* ════ JERSEY SVG ════ */
-function jerseySVG(type){
-  const stripes = type==='home'
-    ? `<g class="stripe">
-         <line x1="64" y1="44" x2="86" y2="58"/><line x1="58" y1="54" x2="80" y2="68"/><line x1="52" y1="64" x2="74" y2="78"/>
-         <line x1="176" y1="44" x2="154" y2="58"/><line x1="182" y1="54" x2="160" y2="68"/><line x1="188" y1="64" x2="166" y2="78"/>
-       </g>`
-    : `<g class="stripe">
-         <line x1="64" y1="44" x2="86" y2="58"/><line x1="58" y1="54" x2="80" y2="68"/><line x1="52" y1="64" x2="74" y2="78"/>
-         <line x1="176" y1="44" x2="154" y2="58"/><line x1="182" y1="54" x2="160" y2="68"/><line x1="188" y1="64" x2="166" y2="78"/>
-       </g>`;
-  return `<svg class="jersey ${type==='away'?'away':''}" viewBox="0 0 240 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${type==='home'?'Camisa principal':'Camisa alternativa'}">
-    <path class="body" d="M88,34 Q104,46 120,50 Q136,46 152,34 L196,52 L214,96 L182,114 L162,76 L168,222 L72,222 L78,76 L58,114 L26,96 L44,52 Z"/>
-    ${stripes}
-    <path class="accent2" d="M214,96 L182,114 L186,124 L218,106 Z"/>
-    <path class="accent2" d="M26,96 L58,114 L54,124 L22,106 Z"/>
-    <path class="collar" d="M88,34 Q104,48 120,52 Q136,48 152,34"/>
-    <ellipse class="crest-bg" cx="120" cy="123" rx="33" ry="39"/>
-    <image href="crest.png" x="96" y="92" width="48" height="62" preserveAspectRatio="xMidYMid meet" opacity="0.96"/>
-  </svg>`;
-}
-document.getElementById('kit-home').innerHTML = jerseySVG('home');
-document.getElementById('kit-away').innerHTML = jerseySVG('away');
 
 /* ════ MARQUEE ════ */
 function buildMarquee(el, parts){
@@ -833,6 +1251,563 @@ toggle.addEventListener('click',()=>{
 links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
   toggle.classList.remove('open');links.classList.remove('open');
 }));
+
+
+/* ═══════════════════════════════════════════
+   LOGICA JAVASCRIPT DO NOVO MÓDULO DE ESCALAÇÃO
+═══════════════════════════════════════════ */
+(function() {
+  // Configurações Globais de Formações Padrão por Modalidade (% de Largura e Altura no Campo)
+  const FORMATIONS = {
+    "11": {
+      "4-4-2": [[50,92], [20,78], [40,78], [60,78], [80,78], [20,54], [43,58], [57,58], [80,54], [38,25], [62,25]],
+      "4-3-3": [[50,92], [20,78], [40,78], [60,78], [80,78], [30,56], [50,56], [70,56], [18,24], [50,22], [82,24]],
+      "4-2-3-1": [[50,92], [20,78], [40,78], [60,78], [80,78], [35,64], [65,64], [22,42], [50,42], [78,42], [50,22]],
+      "3-5-2": [[50,92], [30,78], [50,78], [70,78], [15,55], [35,55], [50,55], [65,55], [85,55], [38,26], [62,26]],
+      "5-3-2": [[50,92], [15,78], [32,78], [50,78], [68,78], [85,78], [30,54], [50,54], [70,54], [38,25], [62,25]]
+    },
+    "10": {
+      "4-4-1": [[50,92], [20,78], [40,78], [60,78], [80,78], [20,54], [43,58], [57,58], [80,54], [50,25]],
+      "4-3-2": [[50,92], [20,78], [40,78], [60,78], [80,78], [30,55], [50,55], [70,55], [35,28], [65,28]],
+      "3-4-2": [[50,92], [30,78], [50,78], [70,78], [18,54], [40,54], [60,54], [82,54], [35,26], [65,26]]
+    },
+    "9": {
+      "3-4-1": [[50,92], [25,76], [50,76], [75,76], [18,52], [40,52], [60,52], [82,52], [50,24]],
+      "4-3-1": [[50,92], [18,76], [40,76], [60,76], [82,76], [30,52], [50,52], [70,52], [50,24]],
+      "3-3-2": [[50,92], [25,76], [50,76], [75,76], [30,52], [50,52], [70,52], [35,25], [65,25]]
+    },
+    "8": {
+      "3-3-1": [[50,92], [25,75], [50,75], [75,75], [28,50], [50,50], [72,50], [50,22]],
+      "4-2-1": [[50,92], [16,75], [38,75], [62,75], [84,75], [35,50], [65,50], [50,22]],
+      "2-4-1": [[50,92], [35,75], [65,75], [16,50], [38,50], [62,50], [84,50], [50,22]]
+    },
+    "7": {
+      "3-2-1": [[50,92], [25,75], [50,75], [75,75], [33,48], [67,48], [50,22]],
+      "2-3-1": [[50,90], [33,75], [67,75], [20,48], [50,48], [80,48], [50,20]],
+      "4-1-1": [[50,92], [16,75], [38,75], [62,75], [84,75], [50,48], [50,22]]
+    },
+    "6": {
+      "2-2-1": [[50,92], [33,75], [67,75], [33,48], [67,48], [50,22]],
+      "3-1-1": [[50,92], [25,75], [50,75], [75,75], [50,48], [50,22]],
+      "2-1-2": [[50,92], [33,75], [67,75], [50,50], [33,25], [67,25]]
+    },
+    "5": {
+      "2-1-1": [[50,92], [33,75], [67,75], [50,50], [50,22]],
+      "1-2-1": [[50,92], [50,75], [28,50], [72,50], [50,22]],
+      "2-2":   [[50,92], [33,72], [67,72], [33,35], [67,35]]
+    }
+  };
+
+  // Estado da Aplicação da Prancheta Tática
+  let currentMode = "7";
+  let currentFormation = "2-3-1";
+  let deployedPlayers = []; // { id (index do array PLAYERS), x, y, area: 'field'|'bench' }
+  let customFormations = {};
+
+  // Cache de Elementos DOM
+  const modeSelect = document.getElementById('tactic-mode-select');
+  const formationSelect = document.getElementById('tactic-formation-select');
+  const playerListContainer = document.getElementById('tactic-player-list');
+  const fieldSpace = document.getElementById('field-players-space');
+  const benchSpace = document.getElementById('bench-players-space');
+  const resetBtn = document.getElementById('tactic-reset-btn');
+  const exportBtn = document.getElementById('tactic-export-btn');
+  const customNameInput = document.getElementById('custom-formation-name');
+  const saveCustomBtn = document.getElementById('save-custom-formation-btn');
+  const customListSelect = document.getElementById('custom-formations-list');
+  
+  // Elementos do Menu Mobile Sidebar
+  const toggleSidebarBtn = document.getElementById('tactic-toggle-sidebar-btn');
+  const closeSidebarBtn = document.getElementById('tactic-close-sidebar-btn');
+  const sidebarElement = document.getElementById('tactic-sidebar');
+
+  // SVG estruturado da Camisa Esportiva
+  function getJerseySVG(pos, isGk) {
+    let mainColor = "var(--blue-deep)";
+    let accentColor = "var(--white)";
+    let stripeColor = "var(--blue-lite)";
+    
+    if (isGk || pos === 'GK') {
+      mainColor = "#10b981"; // Verde Profissional para Goleiro
+      accentColor = "#04102e";
+      stripeColor = "#34d399";
+    } else if (pos === 'DEF') {
+      stripeColor = "rgba(255,255,255,0.2)";
+    } else if (pos === 'MID') {
+      mainColor = "var(--blue)";
+    } else if (pos === 'ATT') {
+      mainColor = "var(--blue-mid)";
+    }
+
+    return `
+      <svg viewBox="0 0 100 100" class="list-jersey-icon" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 15,32 L 28,15 L 40,24 L 50,18 L 60,24 L 72,15 L 85,32 L 76,48 L 76,90 L 24,90 L 24,48 Z" fill="${mainColor}" stroke="${accentColor}" stroke-width="2" />
+        <path d="M 38,24 L 50,34 L 62,24" fill="none" stroke="${accentColor}" stroke-width="3" />
+        <line x1="50" y1="34" x2="50" y2="90" stroke="${stripeColor}" stroke-width="6" />
+        <line x1="36" y1="42" x2="36" y2="90" stroke="${stripeColor}" stroke-width="4" />
+        <line x1="64" y1="42" x2="64" y2="90" stroke="${stripeColor}" stroke-width="4" />
+        <path d="M 15,32 L 26,40" stroke="${accentColor}" stroke-width="2" />
+        <path d="M 85,32 L 74,40" stroke="${accentColor}" stroke-width="2" />
+      </svg>
+    `;
+  }
+
+  // Inicialização e Carregamento de Dados do LocalStorage
+  function initModule() {
+    loadLocalStorage();
+    setupMobileEvents();
+    populateModesAndFormations();
+    renderSidebarPlayers();
+    arrangeSquadOnPitch(true); // Força posicionamento inicial baseado em esquema técnico salvo/padrão
+    setupDragAndDrop();
+  }
+
+  // Controle UI Responsiva / Mobile
+  function setupMobileEvents() {
+    toggleSidebarBtn.addEventListener('click', () => sidebarElement.classList.add('open-mobile'));
+    closeSidebarBtn.addEventListener('click', () => sidebarElement.classList.remove('open-mobile'));
+  }
+
+  // Preenche Seletores de Esquemas de Acordo com Quantidade de Jogadores
+  function populateModesAndFormations() {
+    formationSelect.innerHTML = "";
+    const options = FORMATIONS[currentMode];
+    for (let schema in options) {
+      let opt = document.createElement('option');
+      opt.value = schema;
+      opt.textContent = schema;
+      if (schema === currentFormation) opt.selected = true;
+      formationSelect.appendChild(opt);
+    }
+    updateCustomFormationSelect();
+  }
+
+  // Atualiza Dropdown de Esquemas Customizados Criados pelo Usuário
+  function updateCustomFormationSelect() {
+    customListSelect.innerHTML = '<option value="">-- Usar salva --</option>';
+    let count = 0;
+    for (let name in customFormations[currentMode] || {}) {
+      let opt = document.createElement('option');
+      opt.value = name;
+      opt.textContent = name;
+      customListSelect.appendChild(opt);
+      count++;
+    }
+    customListSelect.style.display = count > 0 ? 'block' : 'none';
+  }
+
+  // Renderiza Sidebar Lateral Esquerda do Elenco
+  function renderSidebarPlayers() {
+    playerListContainer.innerHTML = "";
+    PLAYERS.forEach((player, index) => {
+      const isDeployed = deployedPlayers.find(p => p.id === index);
+      const isCaptain = player.badges.includes('captain');
+      const isInjured = player.badges.includes('injured');
+      const isLoan = player.badges.includes('loan');
+
+      let item = document.createElement('div');
+      item.className = `list-player-item ${isDeployed ? 'active-on-field' : ''}`;
+      item.setAttribute('data-index', index);
+      
+      let badgeMarkup = "";
+      if (isCaptain) badgeMarkup += `<span class="badge captain" style="font-size:0.5rem; padding:1px 4px;">©</span>`;
+      if (isInjured) badgeMarkup += `<span class="badge injured" style="font-size:0.5rem; padding:1px 4px;">🩹</span>`;
+      if (isLoan) badgeMarkup += `<span class="badge loan" style="font-size:0.5rem; padding:1px 4px;">🔄</span>`;
+
+      item.innerHTML = `
+        ${getJerseySVG(player.pos, index === 0 || index === 1 || index === 2)}
+        <div class="list-player-info">
+          <div class="list-player-name">${player.name}</div>
+          <div class="list-player-meta">#${player.number} · ${player.pos}</div>
+        </div>
+        <div class="list-player-status">${badgeMarkup}</div>
+      `;
+
+      item.addEventListener('click', () => togglePlayerFieldPresence(index));
+      playerListContainer.appendChild(item);
+    });
+  }
+
+  // Regra de Negócio: Adicionar ou Remover Jogador ao Clicar na Sidebar
+  function togglePlayerFieldPresence(index) {
+    const existingIndex = deployedPlayers.findIndex(p => p.id === index);
+    if (existingIndex > -1) {
+      // Remove do Campo / Banco
+      deployedPlayers.splice(existingIndex, 1);
+    } else {
+      // Adiciona: Tenta colocar no campo respeitando o limite numérico da modalidade, senão vai para o banco
+      const fieldCount = deployedPlayers.filter(p => p.area === 'field').length;
+      if (fieldCount < parseInt(currentMode)) {
+        deployedPlayers.push({ id: index, x: 50, y: 50, area: 'field' });
+      } else {
+        deployedPlayers.push({ id: index, x: 0, y: 0, area: 'bench' });
+      }
+    }
+    saveLocalStorage();
+    renderSidebarPlayers();
+    arrangeSquadOnPitch(false);
+  }
+
+  // Organiza Automaticamente as Coordenadas dos Cards com Snap ou Alinhamento Tático
+  function arrangeSquadOnPitch(forceResetToDefaultCoordinates = false) {
+    fieldSpace.innerHTML = "";
+    benchSpace.innerHTML = "";
+
+    const fieldPlayers = deployedPlayers.filter(p => p.area === 'field');
+    const benchPlayers = deployedPlayers.filter(p => p.area === 'bench');
+
+    // Se forçar reset ou se o campo estiver vazio, preenche automaticamente usando a formação tática
+    if (forceResetToDefaultCoordinates || fieldPlayers.length === 0) {
+      const defaultPositions = FORMATIONS[currentMode][currentFormation] || [[50,50]];
+      deployedPlayers = deployedPlayers.filter(p => p.area === 'bench'); // Preserva banco atual
+      
+      // Coleta jogadores prioritários (Goleiros primeiro, depois resto de acordo com o tamanho da lista)
+      let availableIndices = PLAYERS.map((_, idx) => idx);
+      
+      // Monta lista de titulares iniciais automáticos baseada no tamanho da modalidade
+      let initialFieldSelection = [];
+      let maxFieldSize = parseInt(currentMode);
+      
+      // Se já existiam jogadores selecionados, tenta manter esses mesmos, reposicionando-os
+      if (!forceResetToDefaultCoordinates && fieldPlayers.length > 0) {
+        initialFieldSelection = fieldPlayers.map(p => p.id);
+      } else {
+        // Seleção inteligente padrão baseada na posição do array original
+        let gk = PLAYERS.findIndex(p => p.pos === 'GK');
+        if (gk > -1) {
+          initialFieldSelection.push(gk);
+          availableIndices = availableIndices.filter(i => i !== gk);
+        }
+        while (initialFieldSelection.length < maxFieldSize && availableIndices.length > 0) {
+          initialFieldSelection.push(availableIndices.shift());
+        }
+      }
+
+      // Atribui posições oficiais do esquema tático
+      initialFieldSelection.forEach((playerIndex, i) => {
+        const coord = defaultPositions[i] || [50, 50];
+        deployedPlayers.push({ id: playerIndex, x: coord[0], y: coord[1], area: 'field' });
+      });
+
+      // Sobra vira banco de reservas automaticamente no reset forçado
+      if (forceResetToDefaultCoordinates) {
+        availableIndices.forEach(playerIndex => {
+          deployedPlayers.push({ id: playerIndex, x: 0, y: 0, area: 'bench' });
+        });
+      }
+    }
+
+    // Desenha em tela os jogadores alocados
+    deployedPlayers.forEach(deployed => {
+      const playerData = PLAYERS[deployed.id];
+      const isCaptain = playerData.badges.includes('captain');
+      const isInjured = playerData.badges.includes('injured');
+      const isLoan = playerData.badges.includes('loan');
+
+      let card = document.createElement('div');
+      card.className = `pitch-player-card`;
+      card.setAttribute('data-id', deployed.id);
+      
+      if (deployed.area === 'field') {
+        card.style.left = `${deployed.x}%`;
+        card.style.top = `${deployed.y}%`;
+        card.style.pointerEvents = 'auto';
+      }
+
+      let badgesMarkup = "";
+      if (isInjured) badgesMarkup += `<div class="status-badge-field injured" title="Lesionado">🩹</div>`;
+      if (isLoan) badgesMarkup += `<div class="status-badge-field loan" title="Emprestado">🔄</div>`;
+
+      card.innerHTML = `
+        <div class="jersey-svg-container ${playerData.pos === 'GK' ? 'jersey-gk' : ''}">
+          ${getJerseySVG(playerData.pos, deployed.id === 0 || deployed.id === 1 || deployed.id === 2)}
+          <div class="jersey-number-overlay">${playerData.number}</div>
+          ${isCaptain ? `<div class="captain-armband" title="Capitão do Time"></div>` : ''}
+          ${badgesMarkup}
+        </div>
+        <div class="player-card-name">${playerData.name}</div>
+      `;
+
+      if (deployed.area === 'field') {
+        fieldSpace.appendChild(card);
+      } else {
+        benchSpace.appendChild(card);
+      }
+    });
+
+    renderSidebarPlayers();
+  }
+
+  // Mecanismo Customizado de Drag and Drop Nativo de Alta Performance (Mouse & Touch)
+  function setupDragAndDrop() {
+    let activeDragCard = null;
+    let startX, startY;
+    let initialLeft, initialTop;
+    let pitchBounds = null;
+
+    document.addEventListener('mousedown', dragStart);
+    document.addEventListener('touchstart', dragStart, { passive: false });
+
+    function dragStart(e) {
+      const targetCard = e.target.closest('.pitch-player-card');
+      if (!targetCard) return;
+
+      // Impede arrastar se estiver no container do banco e não iniciou movimento intencional superior
+      activeDragCard = targetCard;
+      activeDragCard.classList.add('dragging');
+
+      const isTouch = e.type === 'touchstart';
+      const point = isTouch ? e.touches[0] : e;
+      
+      startX = point.clientX;
+      startY = point.clientY;
+
+      const rect = activeDragCard.getBoundingClientRect();
+      const pitchContainer = document.getElementById('pitch-capture-area');
+      pitchBounds = pitchContainer.getBoundingClientRect();
+
+      // Calcula a posição inicial baseada nas porcentagens se estiver no campo, ou posição fixa fluida
+      initialLeft = rect.left + rect.width / 2 - pitchBounds.left;
+      initialTop = rect.top + rect.height / 2 - pitchBounds.top;
+
+      if (isTouch) {
+        document.addEventListener('touchmove', dragMove, { passive: false });
+        document.addEventListener('touchend', dragEnd);
+      } else {
+        document.addEventListener('mousemove', dragMove);
+        document.addEventListener('mouseup', dragEnd);
+      }
+      
+      if(e.cancelable) e.preventDefault();
+    }
+
+    function dragMove(e) {
+      if (!activeDragCard) return;
+
+      const isTouch = e.type === 'touchmove';
+      const point = isTouch ? e.touches[0] : e;
+
+      let deltaX = point.clientX - startX;
+      let deltaY = point.clientY - startY;
+
+      let currentX = initialLeft + deltaX;
+      let currentY = initialTop + deltaY;
+
+      // Força a atualização visual em tempo real diretamente via pixels temporários
+      activeDragCard.style.left = `${currentX}px`;
+      activeDragCard.style.top = `${currentY}px`;
+
+      if(e.cancelable) e.preventDefault();
+    }
+
+    function dragEnd(e) {
+      if (!activeDragCard) return;
+      activeDragCard.classList.remove('dragging');
+
+      const playerIdx = parseInt(activeDragCard.getAttribute('data-id'));
+      const pitchContainer = document.getElementById('pitch-capture-area');
+      pitchBounds = pitchContainer.getBoundingClientRect();
+
+      // Coordenadas finais do drop relativo à tela
+      const rect = activeDragCard.getBoundingClientRect();
+      const dropX = rect.left + rect.width / 2;
+      const dropY = rect.top + rect.height / 2;
+
+      // Verifica se o drop caiu dentro da caixa delimitadora do campo oficial de futebol
+      if (
+        dropX >= pitchBounds.left && dropX <= pitchBounds.right &&
+        dropY >= pitchBounds.top && dropY <= pitchBounds.bottom
+      ) {
+        // Convertendo de volta para escala percentual estável
+        let pctX = ((dropX - pitchBounds.left) / pitchBounds.width) * 100;
+        let pctY = ((dropY - pitchBounds.top) / pitchBounds.height) * 100;
+
+        // Regra de Troca Inteligente / Swap Automático de Posição
+        let targetSwapPlayer = deployedPlayers.find(p => {
+          if (p.id === playerIdx || p.area !== 'field') return false;
+          // Se soltou em um raio menor que 5% de distância de outro jogador, considera colisão de troca
+          let dist = Math.hypot(p.x - pctX, p.y - pctY);
+          return dist < 6.5;
+        });
+
+        let selfObj = deployedPlayers.find(p => p.id === playerIdx);
+
+        if (targetSwapPlayer) {
+          // Inverte posições táticas (origem x destino)
+          if (selfObj.area === 'field') {
+            let tmpX = selfObj.x;
+            let tmpY = selfObj.y;
+            selfObj.x = targetSwapPlayer.x;
+            selfObj.y = targetSwapPlayer.y;
+            targetSwapPlayer.x = tmpX;
+            targetSwapPlayer.y = tmpY;
+          } else {
+            // Se estava no banco e caiu em cima de um titular, joga o titular pro banco e assume o lugar
+            selfObj.area = 'field';
+            selfObj.x = targetSwapPlayer.x;
+            selfObj.y = targetSwapPlayer.y;
+            targetSwapPlayer.area = 'bench';
+            targetSwapPlayer.x = 0;
+            targetSwapPlayer.y = 0;
+          }
+        } else {
+          // Apenas move livremente pelo grid
+          selfObj.area = 'field';
+          selfObj.x = Math.max(3, Math.min(97, pctX));
+          selfObj.y = Math.max(3, Math.min(97, pctY));
+        }
+      } else {
+        // Drop fora do campo joga ou mantém o jogador na área técnica do banco de reservas
+        let selfObj = deployedPlayers.find(p => p.id === playerIdx);
+        selfObj.area = 'bench';
+        selfObj.x = 0;
+        selfObj.y = 0;
+      }
+
+      // Desliga escutas ativas para economizar processamento do navegador
+      document.removeEventListener('mousemove', dragMove);
+      document.removeEventListener('mouseup', dragEnd);
+      document.removeEventListener('touchmove', dragMove);
+      document.removeEventListener('touchend', dragEnd);
+
+      activeDragCard = null;
+      saveLocalStorage();
+      arrangeSquadOnPitch(false);
+    }
+  }
+
+  // Persistência de Dados Automatizada via LocalStorage do Navegador
+  function saveLocalStorage() {
+    const data = {
+      currentMode,
+      currentFormation,
+      deployedPlayers,
+      customFormations
+    };
+    localStorage.setItem('atletico_limeirense_tactic_v1', JSON.stringify(data));
+  }
+
+  function loadLocalStorage() {
+    const stored = localStorage.getItem('atletico_limeirense_tactic_v1');
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        currentMode = parsed.currentMode || "7";
+        currentFormation = parsed.currentFormation || "2-3-1";
+        deployedPlayers = parsed.deployedPlayers || [];
+        customFormations = parsed.customFormations || {};
+        modeSelect.value = currentMode;
+      } catch (err) {
+        console.error("Falha ao restaurar dados salvos da tática tática anterior.", err);
+      }
+    }
+  }
+
+  // Ouvintes de Eventos de Elementos de Interface do Usuário (UI Selectors)
+  modeSelect.addEventListener('change', (e) => {
+    currentMode = e.target.value;
+    // Carrega esquema padrão número 1 da modalidade selecionada
+    currentFormation = Object.keys(FORMATIONS[currentMode])[0];
+    populateModesAndFormations();
+    arrangeSquadOnPitch(true);
+    saveLocalStorage();
+  });
+
+  formationSelect.addEventListener('change', (e) => {
+    currentFormation = e.target.value;
+    arrangeSquadOnPitch(true);
+    saveLocalStorage();
+  });
+
+  // Salvar Esquema Tático Customizado com Posições Arrastadas Manualmente pelo Usuário
+  saveCustomBtn.addEventListener('click', () => {
+    let name = customNameInput.value.trim();
+    if (!name) {
+      alert("Por favor, digite um nome identificador para seu esquema personalizado.");
+      return;
+    }
+    
+    // Coleta coordenadas atuais de quem está apenas em campo jogando
+    const currentCoordinates = deployedPlayers.filter(p => p.area === 'field').map(p => [p.x, p.y]);
+    if (currentCoordinates.length !== parseInt(currentMode)) {
+      alert(`Para salvar uma formação válida, você precisa ter exatamente ${currentMode} jogadores titulares escalados no gramado.`);
+      return;
+    }
+
+    if (!customFormations[currentMode]) customFormations[currentMode] = {};
+    // Registra nova chave tática clonada
+    FORMATIONS[currentMode][name] = currentCoordinates;
+    customFormations[currentMode][name] = currentCoordinates;
+    
+    customNameInput.value = "";
+    populateModesAndFormations();
+    saveLocalStorage();
+    alert(`Esquema tático "${name}" salvo com sucesso! Ele estará disponível no menu acima.`);
+  });
+
+  customListSelect.addEventListener('change', (e) => {
+    if (!e.target.value) return;
+    currentFormation = e.target.value;
+    arrangeSquadOnPitch(true);
+    saveLocalStorage();
+  });
+
+  // Limpeza de Estado Tático Completo (Resetador)
+  resetBtn.addEventListener('click', () => {
+    if (confirm("Deseja realmente limpar toda a escalação atual? Todos os jogadores retornarão para a reserva do banco.")) {
+      deployedPlayers = PLAYERS.map((_, idx) => ({ id: idx, x: 0, y: 0, area: 'bench' }));
+      saveLocalStorage();
+      arrangeSquadOnPitch(false);
+    }
+  });
+
+  // Injeção Sob Demanda do Script html2canvas para Geração do PNG de Alta Resolução
+  exportBtn.addEventListener('click', () => {
+    exportBtn.textContent = "Processando...";
+    exportBtn.disabled = true;
+
+    if (typeof html2canvas === 'undefined') {
+      const script = document.createElement('script');
+      script.src = "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";
+      script.onload = triggerCapture;
+      document.head.appendChild(script);
+    } else {
+      triggerCapture();
+    }
+
+    function triggerCapture() {
+      const captureArea = document.getElementById('pitch-capture-area');
+      
+      // Configurações de exportação profissional limpa para redes sociais
+      html2canvas(captureArea, {
+        useCORS: true,
+        scale: 2, // Dobra resolução para evitar serrilhado em telas retina
+        backgroundColor: '#1e5e2f',
+        logging: false
+      }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = `Escalacao-Atletico-Limeirense-${currentFormation}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        
+        exportBtn.textContent = "Exportar PNG";
+        exportBtn.disabled = false;
+      }).catch(err => {
+        console.error("Erro na exportação da imagem tática:", err);
+        exportBtn.textContent = "Exportar PNG";
+        exportBtn.disabled = false;
+        alert("Ocorreu um erro ao gerar o arquivo de imagem.");
+      });
+    }
+  });
+
+  // Dispara Módulo Tático na Inicialização da Página
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initModule);
+  } else {
+    initModule();
+  }
+})();
 </script>
 </body>
 </html>
