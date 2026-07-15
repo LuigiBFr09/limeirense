@@ -142,11 +142,9 @@ nav.hidden{transform:translateY(-100%);}
 .hero-bigtext .row{overflow:hidden;line-height:1;white-space:nowrap;}
 .hero-bigtext .row span{
   display:block;font-family:var(--font-display);text-transform:uppercase;
-  font-size:clamp(3rem,11.5vw,9.5rem);letter-spacing:0.02em;
+  font-size:clamp(1rem,18.5vw,21.5rem);letter-spacing:0.02em;
   transform:translateY(112%);animation:lineUp 1.1s 0.35s cubic-bezier(.2,1,.3,1) forwards;
-  color:transparent;-webkit-text-fill-color:transparent;-webkit-text-stroke:2px rgba(106,160,255,0.5);
-  background:linear-gradient(180deg,rgba(255,255,255,0.16),rgba(106,160,255,0.05));
-  -webkit-background-clip:text;background-clip:text;
+  color:var(--white);
 }
 @keyframes lineUp{to{transform:translateY(0);}}
 
@@ -616,9 +614,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(47,107,255,0.2);pad
   <p class="hero-eyebrow">Atlético Limeirense · Clube de Futebol · Limeira-SP</p>
 
   <div class="hero-stage">
-    <div class="hero-bigtext" aria-hidden="false" role="heading" aria-level="1" aria-label="Uma Nova Era">
-      <div class="row"><span>Uma&nbsp;Nova&nbsp;Era</span></div>
-    </div>
+
     <div class="hero-floor"></div>
     <div class="crest-3d" id="crest3d">
       <div class="halo"></div>
