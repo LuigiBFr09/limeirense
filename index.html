@@ -136,20 +136,18 @@ nav.hidden{transform:translateY(-100%);}
 /* texto gigante ATRÁS do escudo */
 .hero-bigtext{
   position:absolute;inset:0;z-index:1;pointer-events:none;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  user-select:none;
+  display:flex;align-items:center;justify-content:center;
+  user-select:none;width:100vw;left:50%;transform:translateX(-50%);
 }
-.hero-bigtext .row{overflow:hidden;line-height:0.86;}
+.hero-bigtext .row{overflow:hidden;line-height:1;white-space:nowrap;}
 .hero-bigtext .row span{
   display:block;font-family:var(--font-display);text-transform:uppercase;
-  font-size:clamp(4rem,14.5vw,11rem);letter-spacing:0.02em;
-  transform:translateY(112%);animation:lineUp 1s cubic-bezier(.2,1,.3,1) forwards;
+  font-size:clamp(3rem,11.5vw,9.5rem);letter-spacing:0.02em;
+  transform:translateY(112%);animation:lineUp 1.1s 0.35s cubic-bezier(.2,1,.3,1) forwards;
+  color:transparent;-webkit-text-fill-color:transparent;-webkit-text-stroke:2px rgba(106,160,255,0.5);
+  background:linear-gradient(180deg,rgba(255,255,255,0.16),rgba(106,160,255,0.05));
+  -webkit-background-clip:text;background-clip:text;
 }
-.hero-bigtext .row:nth-child(1) span{animation-delay:0.30s;color:transparent;-webkit-text-stroke:2px rgba(106,160,255,0.55);}
-.hero-bigtext .row:nth-child(2) span{animation-delay:0.42s;color:rgba(255,255,255,0.1);
-  background:linear-gradient(180deg,rgba(255,255,255,0.22),rgba(106,160,255,0.1));
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
-.hero-bigtext .row:nth-child(3) span{animation-delay:0.54s;color:transparent;-webkit-text-stroke:2px rgba(106,160,255,0.55);}
 @keyframes lineUp{to{transform:translateY(0);}}
 
 /* escudo 3D com tilt (padrão TiltCard/Gravitate — 21st.dev) */
@@ -295,11 +293,10 @@ nav.hidden{transform:translateY(-100%);}
 .next-face{display:grid;grid-template-columns:1fr auto 1fr;gap:clamp(14px,4vw,40px);align-items:center;margin-bottom:32px;}
 .next-team{display:flex;flex-direction:column;align-items:center;gap:12px;}
 .next-team img{width:clamp(70px,10vw,104px);object-fit:contain;filter:drop-shadow(0 8px 20px rgba(0,0,0,0.5));}
-.next-team .opp-crest{
-  width:clamp(70px,10vw,104px);height:clamp(84px,12vw,124px);border-radius:14px;
-  background:rgba(255,255,255,0.08);border:1px dashed rgba(255,255,255,0.3);
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--font-display);font-size:clamp(1.6rem,3vw,2.4rem);color:rgba(255,255,255,0.75);
+.next-team img.opp-logo{
+  width:clamp(84px,12vw,128px);height:clamp(70px,10vw,104px);
+  padding:10px;border-radius:14px;
+  background:rgba(4,16,46,0.5);border:1px solid rgba(255,255,255,0.22);
 }
 .next-team .name{font-family:var(--font-head);font-weight:800;font-size:clamp(0.85rem,1.6vw,1.05rem);text-transform:uppercase;letter-spacing:0.06em;text-align:center;}
 .next-vs{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,3rem);color:rgba(255,255,255,0.4);}
@@ -537,21 +534,17 @@ table.standings{width:100%;border-collapse:collapse;min-width:620px;background:l
 .kit-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue-deep),var(--accent),var(--blue-lite));}
 .kit-card:hover{border-color:rgba(79,140,255,0.5);transform:translateY(-8px);box-shadow:0 28px 64px rgba(6,20,60,0.6);}
 .kit-badge{display:inline-block;font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;padding:5px 14px;border-radius:20px;background:rgba(79,140,255,0.12);border:1px solid var(--accent);color:var(--blue-lite);margin-bottom:18px;}
-.kit-svg-wrap{margin:0 auto;width:100%;max-width:260px;}
-.kit-svg-wrap svg{width:100%;height:auto;display:block;filter:drop-shadow(0 18px 30px rgba(0,0,0,0.45));transition:transform .4s;}
-.kit-card:hover .kit-svg-wrap svg{transform:translateY(-4px) scale(1.02);}
+.kit-img-wrap{margin:0 auto;width:100%;max-width:420px;}
+.kit-img-wrap img{
+  width:100%;height:auto;display:block;
+  filter:drop-shadow(0 20px 34px rgba(0,0,0,0.5));
+  transition:transform .4s cubic-bezier(.2,1,.3,1);
+}
+.kit-card:hover .kit-img-wrap img{transform:translateY(-6px) scale(1.03);}
 .kit-name{font-family:var(--font-display);font-size:1.8rem;letter-spacing:0.05em;margin-top:8px;margin-bottom:8px;}
 .kit-desc{font-size:0.82rem;color:var(--text-muted);line-height:1.65;}
 .kit-colors{display:flex;gap:8px;justify-content:center;margin-top:20px;}
 .kit-color-dot{width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,0.18);}
-.jersey{--body:var(--blue-deep);--accent2:#fff;--stripe:#fff;--outline:rgba(255,255,255,0.12);}
-.jersey.away{--body:#eef3ff;--accent2:#0a2a8c;--stripe:#0a2a8c;--outline:rgba(10,42,140,0.25);}
-.jersey .body{fill:var(--body);stroke:var(--outline);stroke-width:2;}
-.jersey .accent2{fill:var(--accent2);}
-.jersey .stripe{stroke:var(--stripe);stroke-width:4;stroke-linecap:round;}
-.jersey .collar{fill:none;stroke:var(--accent2);stroke-width:8;stroke-linecap:round;}
-.jersey .crest-bg{fill:rgba(255,255,255,0.16);}
-.jersey.away .crest-bg{fill:transparent;}
 
 /* ── FOOTER ── */
 footer{position:relative;z-index:1;border-top:1px solid rgba(47,107,255,0.2);padding:64px 24px;text-align:center;}
@@ -624,9 +617,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(47,107,255,0.2);pad
 
   <div class="hero-stage">
     <div class="hero-bigtext" aria-hidden="false" role="heading" aria-level="1" aria-label="Uma Nova Era">
-      <div class="row"><span>Uma</span></div>
-      <div class="row"><span>Nova</span></div>
-      <div class="row"><span>Era</span></div>
+      <div class="row"><span>Uma&nbsp;Nova&nbsp;Era</span></div>
     </div>
     <div class="hero-floor"></div>
     <div class="crest-3d" id="crest3d">
@@ -662,7 +653,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(47,107,255,0.2);pad
       </div>
       <div class="next-vs">VS</div>
       <div class="next-team">
-        <div class="opp-crest" id="next-opp-initial">P</div>
+        <img src="pandora.png" alt="Pandora" id="next-opp-logo" class="opp-logo">
         <div class="name" id="next-opp-name">Pandora</div>
       </div>
     </div>
@@ -713,23 +704,23 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(47,107,255,0.2);pad
   <div class="kits-grid">
     <div class="kit-card reveal-left">
       <div class="kit-badge">Camisa I · Principal</div>
-      <div class="kit-svg-wrap" id="kit-home"></div>
+      <div class="kit-img-wrap"><img src="branca.png" alt="Camisa I branca do Atlético Limeirense" loading="lazy"></div>
       <div class="kit-name">Camisa I</div>
-      <div class="kit-desc">O manto da nova era. Azul royal profundo com gola e detalhes em branco — a cor do escudo vestida com orgulho.</div>
+      <div class="kit-desc">O manto principal da nova era. Branco puro com detalhes em azul royal e o leão em marca d'água tomando o peito.</div>
       <div class="kit-colors">
-        <div class="kit-color-dot" style="background:#0a2a8c" title="Azul Royal"></div>
         <div class="kit-color-dot" style="background:#ffffff" title="Branco"></div>
-        <div class="kit-color-dot" style="background:#6aa0ff" title="Azul Claro"></div>
+        <div class="kit-color-dot" style="background:#0a2a8c" title="Azul Royal"></div>
+        <div class="kit-color-dot" style="background:#c3cbdc" title="Prata"></div>
       </div>
     </div>
     <div class="kit-card reveal-right">
       <div class="kit-badge">Camisa II · Alternativa</div>
-      <div class="kit-svg-wrap" id="kit-away"></div>
+      <div class="kit-img-wrap"><img src="preta.png" alt="Camisa II preta do Atlético Limeirense" loading="lazy"></div>
       <div class="kit-name">Camisa II</div>
-      <div class="kit-desc">Uniforme alternativo. Branco puro com acabamentos em azul royal — leveza e tradição para os jogos fora de casa.</div>
+      <div class="kit-desc">Uniforme alternativo. Preto imponente com o leão azul rugindo no peito — elegância para os jogos fora de casa.</div>
       <div class="kit-colors">
-        <div class="kit-color-dot" style="background:#ffffff" title="Branco"></div>
-        <div class="kit-color-dot" style="background:#0a2a8c" title="Azul Royal"></div>
+        <div class="kit-color-dot" style="background:#0b0b0f" title="Preto"></div>
+        <div class="kit-color-dot" style="background:#1640c8" title="Azul Royal"></div>
         <div class="kit-color-dot" style="background:#04102e" title="Navy"></div>
       </div>
     </div>
@@ -981,8 +972,23 @@ const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(!el||REDUCED)return;
   const TILT=16, SCALE=1.06, PERSP=1200;
   let raf=null, entered=false;
+  /* quando a animação de entrada termina, fixa o estado final inline e
+     remove a animação — sem isso o fill 'forwards' bloqueia o tilt e
+     removê-la no hover fazia o escudo sumir (opacity voltava a 0) */
+  el.addEventListener('animationend',e=>{
+    if(e.animationName==='crestIn'){
+      el.style.opacity='1';
+      el.style.animation='none';
+    }
+  });
   function setT(t){el.style.transform=t;}
-  el.addEventListener('pointerenter',()=>{entered=true;el.style.animation='none';});
+  el.addEventListener('pointerenter',()=>{
+    entered=true;
+    /* fix: crestIn tem fill forwards segurando a opacidade; ao remover a animação,
+       fixamos opacity=1 inline para o escudo não desaparecer */
+    el.style.opacity='1';
+    el.style.animation='none';
+  });
   el.addEventListener('pointermove',e=>{
     if(!entered)return;
     if(raf)cancelAnimationFrame(raf);
@@ -1013,7 +1019,6 @@ const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 (function(){
   document.getElementById('next-league').textContent=NEXT_MATCH.league;
   document.getElementById('next-opp-name').textContent=NEXT_MATCH.opponent;
-  document.getElementById('next-opp-initial').textContent=NEXT_MATCH.opponent.charAt(0).toUpperCase();
   const d=NEXT_MATCH.date;
   const fmt=d.toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});
   const hr=d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
@@ -1063,24 +1068,6 @@ const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     card.addEventListener('pointerleave',()=>{card.style.transform='perspective(1000px) rotateX(0) rotateY(0)';});
   }
 })();
-
-/* ════ JERSEY SVG ════ */
-function jerseySVG(type){
-  return `<svg class="jersey ${type==='away'?'away':''}" viewBox="0 0 240 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${type==='home'?'Camisa principal':'Camisa alternativa'}">
-    <path class="body" d="M88,34 Q104,46 120,50 Q136,46 152,34 L196,52 L214,96 L182,114 L162,76 L168,222 L72,222 L78,76 L58,114 L26,96 L44,52 Z"/>
-    <g class="stripe">
-      <line x1="64" y1="44" x2="86" y2="58"/><line x1="58" y1="54" x2="80" y2="68"/><line x1="52" y1="64" x2="74" y2="78"/>
-      <line x1="176" y1="44" x2="154" y2="58"/><line x1="182" y1="54" x2="160" y2="68"/><line x1="188" y1="64" x2="166" y2="78"/>
-    </g>
-    <path class="accent2" d="M214,96 L182,114 L186,124 L218,106 Z"/>
-    <path class="accent2" d="M26,96 L58,114 L54,124 L22,106 Z"/>
-    <path class="collar" d="M88,34 Q104,48 120,52 Q136,48 152,34"/>
-    <ellipse class="crest-bg" cx="120" cy="123" rx="33" ry="39"/>
-    <image href="crest.png" x="96" y="92" width="48" height="62" preserveAspectRatio="xMidYMid meet" opacity="0.96"/>
-  </svg>`;
-}
-document.getElementById('kit-home').innerHTML = jerseySVG('home');
-document.getElementById('kit-away').innerHTML = jerseySVG('away');
 
 /* ════ MARQUEE ════ */
 function buildMarquee(el, parts){const b=parts.join('');el.innerHTML=b+b;}
